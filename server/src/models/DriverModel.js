@@ -26,16 +26,11 @@ const DriverModel = (sequelize) => {
         allowNull: false,
       },
       image: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: false,
-        unique: true,
       },
       nationality: {
-        type: DataTypes.ARRAY(DataTypes.STRING), // ARRAY NACIONALIDAD
-        allowNull: false,
-      },
-      teams: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       dob: {

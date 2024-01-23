@@ -1,18 +1,8 @@
 const { driversController } = require("../controllers/driversController");
 
 
-const getHandlerDrivers = async (req, res) => {
-  try {
-    let respuesta = await driversController();
-    
-    res.status(200).json({
-      respuesta,
-      message: "Data retrieved and saved successfully",
-    });
-  } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
+const getHandlerDrivers = (req, res) => {
+    res.status(200).send("aquí están todos los usuarios");
 };
 
 const getHandlerDriversById = (req, res) =>  {
@@ -29,6 +19,30 @@ const getHandlerDriversByName = (req, res) => {
     const { name, surname, age } = req.body; // en este caso req está llegando por body, por lo tanto para extraer los datos se desestructura
     res.status(201).send(`usuario creado correctamente con los datos ${name}, ${surname}, ${age}`);
   };
+
+  /*
+  const axios = require("axios");
+const { Driver } = require("../db");
+
+async function getDrivers(req, res) {
+  try {
+    let drivers = [];
+
+    const [response, responseDB] = await Promise.all([
+      axios.get("http://localhost:5000/drivers"),
+      Driver.findAll(),
+    ]);
+
+    drivers = [...response.data, ...responseDB];
+
+    res.send(drivers);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+}
+
+module.exports = getDrivers;
+  */
 
 
   module.exports = {
