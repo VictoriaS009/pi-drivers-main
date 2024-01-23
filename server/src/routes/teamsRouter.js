@@ -4,7 +4,7 @@ const {getHandlerTeams} = require("../handlers/teamsHandlers");
 const teamsRouter = Router();
 
 
-teamsRouter.get("/drivers", getHandlerTeams);
+teamsRouter.get("/", getHandlerTeams);
 
 module.exports = teamsRouter;
 

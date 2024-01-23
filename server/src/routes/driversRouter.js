@@ -1,39 +1,30 @@
 
 const {Router} = require("express");
-const {postHandlerDriver, getHandlerDriversById, getHandlerDriversByName, postHandlerDriver} = require("../handlers/driverHandlers");
-
+const { getHandlerDrivers, getHandlerDriversById, getHandlerDriversByName, postHandlerDriver } = require("../handlers/driversHandlers");
 const driversRouter = Router();
 
 
-driversRouter.get("/drivers", getHandlerDrivers);
+driversRouter.get("/", getHandlerDrivers);
 
-driversRouter.get("/drivers/:id", getHandlerDriversById);
+driversRouter.get("/:id", getHandlerDriversById);
 
-driversRouter.get("/driver", getHandlerDriversByName);
+driversRouter.get("/name", getHandlerDriversByName);
 
-driversRouter.post("/drivers", postHandlerDriver);
-
-
+driversRouter.post("/", postHandlerDriver);
 
 
-
-// --
-
-const usersRouter = Router();
-/* en este caso los handlers se importarán
-usersRouter.get("/", (req, res) => {
-    res.status(200).send("aquí están todos los usuarios");
-});
-
-usersRouter.get("/:id", (req, res) =>  {
-    res.status(200).send(`detalle del ${id} del usuario`)
-})
-*/
-
-
-driversRouter.get("/", getHandlerUsers);
-
-
-driversRouter.get("/:id", getHandlerIdUsers);
 
 module.exports = driversRouter;
+
+
+/*
+ en este caso los handlers se importarán
+****.get("/", (req, res) => {
+    res.status(200).send("mensaje");
+});
+
+***.get("/:id", (req, res) =>  {
+    res.status(200).send(`detalle del ${id} ...`)
+})
+
+*/

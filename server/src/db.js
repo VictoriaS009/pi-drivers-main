@@ -10,9 +10,10 @@ const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}
   logging: console.log('Connected to DB...'),   
   native: false, 
 });
-
+// Definición de modelos
 DriverModel(sequelize);
 TeamModel(sequelize);
+// relaciones
 const { Driver, Team } = sequelize.models;
 
 // Aca vendrian las relaciones
