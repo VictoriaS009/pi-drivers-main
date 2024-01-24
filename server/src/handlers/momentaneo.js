@@ -54,4 +54,21 @@ module.exports = getDrivers;
 
 
 
+teamsArray.forEach((team, index, array) => {
+  array[index] = team.trim();
+});
 
+
+
+let tableDrivers = await Driver.findAll();
+
+if (tableDrivers.length > 0 && id < 509) {
+  let driver = await tableDrivers.findOne({
+    where: {
+      idAPI: id,
+    },
+  });
+  if (driver) {
+    return driver;
+  }
+}; // si aún no hay idAPI en db

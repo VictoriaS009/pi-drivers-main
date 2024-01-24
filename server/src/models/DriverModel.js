@@ -1,6 +1,6 @@
 const { DataTypes } = require("sequelize");
-// Exportamos una funcion que define el modelo
-// Luego le injectamos la conexion a sequelize.
+// Export f que define el modelo
+// inject la conex a sequelize.
 
 const DriverModel = (sequelize) => {
   // Define el modelo
@@ -11,6 +11,10 @@ const DriverModel = (sequelize) => {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+        allowNull: false,
+      },
+      idAPI: {
+        type:DataTypes.INTEGER,
         allowNull: false,
       },
       forename: {
@@ -27,6 +31,10 @@ const DriverModel = (sequelize) => {
       },
       image: {
         type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      teams: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
       },
       nationality: {

@@ -25,12 +25,9 @@ const teamsController = async () => {
      // Dividir la cadena en teams en un array
       const teamsArray = teamsString.split(',');
 
-      teamsArray.forEach((team, index, array) => {
-        array[index] = team.trim();
-      });
 
       // Agregar cada equipo al conjunto (Set) para evitar duplicados
-      teamsArray.forEach(team => unicoTeamsSet.add(team));
+      teamsArray.forEach(team => unicoTeamsSet.add(team.trim()));
     }
   });
   // Convertir el conjunto a un array
@@ -38,7 +35,7 @@ const teamsController = async () => {
   // en este punto hay un array sin equipos repetidos
 
   // Almacena los nombres de los equipos en la tabla Teams
-  await Team.bulkCreate(unicoTeamsArray.map(nombre => ({ nombre })));
+  await Team.bulkCreate(unicoTeamsArray.map(name => ({ name })));
   tableTeam = await Team.findAll();
 
   return tableTeam;

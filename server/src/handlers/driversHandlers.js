@@ -1,10 +1,11 @@
 const { driversController } = require("../controllers/driversController");
+const { idDriversController } = require("../controllers/IdDriversController");
 
 
 const getHandlerDrivers = async (req, res) => {
   try {
     let respuesta = await driversController();
-    
+
     res.status(200).json({
       respuesta,
       message: "Data retrieved and saved successfully",
@@ -15,9 +16,22 @@ const getHandlerDrivers = async (req, res) => {
   }
 };
 
-const getHandlerDriversById = (req, res) =>  {
-    const {id} = req.params; //en este caso req está llegando por params, por lo tanto para extraer el id se desestructura
-    res.status(200).send(`detalle del ${id} del usuario`)
+const getHandlerDriversById = async (req, res) =>  {
+  try {
+    const id = parseInt(req.params.id.slice(1)); //en este caso req está llegando por params; id se desestructura
+    console.log(id);
+    let respuesta = await idDriversController(id);
+    res.status(200).send({
+      message: `detalle del ${id} del usuario`,
+      respuesta,
+    }
+    )
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+
+   
 };
 
 const getHandlerDriversByName = (req, res) => {

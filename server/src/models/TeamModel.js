@@ -11,7 +11,7 @@ const TeamModel = (sequelize) => {
         unique: true,
         autoIncrement: true,
       },
-      nombre: {
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },

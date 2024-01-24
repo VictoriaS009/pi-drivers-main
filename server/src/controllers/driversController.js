@@ -17,6 +17,7 @@ const driversController = async () => {
 
   data.forEach(obj => {
     const {
+      id,
       name: { forename, surname },
       nationality,
       dob,
@@ -34,19 +35,29 @@ const driversController = async () => {
       var description = "This **driver** does not have a description available.";
     };
     
+    if (obj.teams) {
+      var { teams } = obj;
+      var teamsArr = teams.split(',').map((e) => e.trim());
+    } else {
+      var teamsArr = ["No team registration"];
+    };
 
     class Driver001 {
-      constructor(forename, surname, description, image, nationality, dob) {
+      constructor(idAPI, forename, surname, description, image, nationality, teams, dob) {
+        this.idAPI= idAPI;
         this.forename = forename;
         this.surname = surname;
         this.description = description;
         this.image = image;
         this.nationality = nationality;
+        this.teams = teams;
         this.dob = dob;
       }
     };
 
-    const soyDriver = new Driver001(forename, surname, description, url, nationality, dob);
+    
+
+    const soyDriver = new Driver001(id, forename, surname, description, url, nationality, teamsArr, dob);
    
 
     driversArray.push(soyDriver);
