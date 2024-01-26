@@ -1,13 +1,10 @@
-const axios = require("axios");
 const { Driver } = require("../db");
-const { driversController } = require("./driversController");
-require("dotenv").config();
+const { functControllerGen } = require("./functControllerGen");
 
-const { API } = process.env;
 
 const idDriversController = async (num) => {
 
-tableDrivers = await driversController();
+await functControllerGen();
 
 if (num < 509) {
   let driver = await Driver.findOne({

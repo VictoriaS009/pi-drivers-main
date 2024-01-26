@@ -1,14 +1,14 @@
 const { driversController } = require("../controllers/driversController");
 const { idDriversController } = require("../controllers/IdDriversController");
-
+const { nameDriversController } = require("../controllers/nameDriversController");
 
 const getHandlerDrivers = async (req, res) => {
   try {
     let respuesta = await driversController();
 
     res.status(200).json({
-      respuesta,
       message: "Data retrieved and saved successfully",
+      respuesta,
     });
   } catch (error) {
     console.error("Error:", error.message);
@@ -18,11 +18,10 @@ const getHandlerDrivers = async (req, res) => {
 
 const getHandlerDriversById = async (req, res) =>  {
   try {
-    const id = parseInt(req.params.id.slice(1)); //en este caso req está llegando por params; id se desestructura
-    console.log(id);
+    const { id } = req.params; //en este caso req está llegando por params; id se desestructura
     let respuesta = await idDriversController(id);
     res.status(200).send({
-      message: `detalle del ${id} del usuario`,
+      message: `User details with id: ${id}`,
       respuesta,
     }
     )
@@ -34,9 +33,19 @@ const getHandlerDriversById = async (req, res) =>  {
    
 };
 
-const getHandlerDriversByName = (req, res) => {
-    const { name } = req.query; // en este caso req está llegando por query, por lo tanto para extraer el name se desestructura
-    res.status(200).send(`aquí están todos los usuarios con el nombre ${name}`);
+const getHandlerDriversByName = async (req, res) => {
+    try {
+    const { name } = req.query; // en este caso req está llegando por query
+    
+    let respuesta = await nameDriversController(name);
+    res.status(200).send({
+      message: name,
+      answer: respuesta,
+    });
+    } catch (error) {
+      console.error("Error:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   };
 
   const postHandlerDriver = (req, res) => {

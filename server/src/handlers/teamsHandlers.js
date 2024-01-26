@@ -1,8 +1,6 @@
 const { teamsController } = require("../controllers/teamsController");
 
 
-
-
 const getHandlerTeams = async (req, res) => {
   try {
     let respuesta = await teamsController();
