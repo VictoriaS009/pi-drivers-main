@@ -16,7 +16,7 @@ const nameDriversController = async (searchName) => {
     limit: 15,
   });
 
-  
+  // Realiza la búsqueda basada en surname
   if (!resultDrives || resultDrives.length === 0) {
     resultDrives = await Driver.findAll({
       where: {

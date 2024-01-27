@@ -1,6 +1,7 @@
 const { driversController } = require("../controllers/driversController");
 const { idDriversController } = require("../controllers/IdDriversController");
 const { nameDriversController } = require("../controllers/nameDriversController");
+const { postDriversController } = require("../controllers/postDriversController");
 
 const getHandlerDrivers = async (req, res) => {
   try {
@@ -48,9 +49,19 @@ const getHandlerDriversByName = async (req, res) => {
     }
   };
 
-  const postHandlerDriver = (req, res) => {
-    const { name, surname, age } = req.body; // en este caso req está llegando por body, por lo tanto para extraer los datos se desestructura
-    res.status(201).send(`usuario creado correctamente con los datos ${name}, ${surname}, ${age}`);
+  const postHandlerDriver = async (req, res) => {
+    
+    try {
+      const { forename, surname, description, image, nationality, teams, dob } = req.body;
+    
+      let respuesta = await postDriversController(forename, surname, description, image, nationality, teams, dob);
+      res.status(200).send({
+        answer: respuesta,
+      });
+      } catch (error) {
+        console.error("Error:", error.message);
+        res.status(500).json({ error: "Internal Server Error" });
+      }
   };
 
 

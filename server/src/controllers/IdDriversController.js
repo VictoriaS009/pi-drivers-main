@@ -4,18 +4,28 @@ const { functControllerGen } = require("./functControllerGen");
 
 const idDriversController = async (num) => {
 
-await functControllerGen();
+  try {
+    await functControllerGen();
 
-if (num < 509) {
-  let driver = await Driver.findOne({
-    where: {
-      idAPI: num,
-    },
-  });
-  return driver;
-  } else{
+    let driver = await Driver.findOne({
+      where: {
+        idAPI: num,
+      },
+    });
+
+    const respuesta = () => {
+      if(driver) {
+        return driver;
+      } else {
         return "No drivers associated with the entered id have been found."
-  };
+      }
+    
+    }
+    return respuesta();
+    } catch (error) {
+      console.error("Error:", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
 };
 
 module.exports = { idDriversController };
