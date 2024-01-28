@@ -1,0 +1,69 @@
+.container {
+  width: 15em;
+  height: 28em;
+  margin: 1em;
+  padding: 0.5em 0.8em 0.5em 0.5em;
+  border: none;
+  border-radius: 1em;
+  color: whitesmoke;
+  background-color: #170d21;
+  box-shadow: #e1e1e1 0px 1px 2px 0px, #e1e1e1 0px 1px 8px 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 2.5em;
+  height: 1em;
+}
+
+.separador {
+  width: 15.5em;
+}
+
+.imgContainer {
+  width: 10em;
+  height: 15em;
+  overflow: hidden;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.textContainer {
+  display: grid;
+  grid-template-columns: 8em 8em;
+  grid-template-rows: auto;
+  justify-content: center;
+  align-items: center;
+  justify-items: stretch;
+}
+
+.name {
+  height: 9em;
+  padding: 1em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+  text-align: start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.teams {
+  height: 9em;
+  padding: 1em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;
+  border-left: 2px solid #e1e1e1;
+  text-align: start;
+  text-decoration: none;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}

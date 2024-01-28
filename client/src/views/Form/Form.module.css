@@ -1,0 +1,155 @@
+.container {
+  color: #e1e1e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 2em;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.inputForename {
+  grid-area: forename;
+}
+
+.inputSurname {
+  grid-area: surname;
+}
+
+.selectNationality {
+  grid-area: nationality;
+}
+
+.selectTeams {
+  grid-area: teams;
+}
+
+.inputDob {
+  grid-area: dob;
+}
+
+.inputImage {
+  grid-area: image;
+}
+
+.inputDescription {
+  grid-area: description;
+}
+
+.btn {
+  grid-area: btn;
+}
+
+.formContainer {
+  width: 90vw;
+  height: 85vh;
+  display: grid;
+  grid-template-columns: repeat(3 auto);
+  grid-template-rows: repeat(5 auto);
+  grid-template-areas:
+    "forename . surname"
+    "nationality . teams"
+    "dob . image"
+    "description description description"
+    ". btn .";
+}
+
+.inputForename {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.inputForename::placeholder {
+  color: #170d21;
+}
+
+.inputSurname {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.inputSurname::placeholder {
+  color: #170d21;
+}
+
+.selectNationality {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.selectTeams {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.inputDob {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.inputDob::placeholder {
+  color: #170d21;
+}
+
+.inputImage {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.inputImage::placeholder {
+  color: #170d21;
+}
+
+.inputDescription {
+  margin: 0.5em;
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+}
+
+.inputDescription::placeholder {
+  color: #170d21;
+}
+
+.btn {
+  padding: 0.5em;
+  color: #170d21;
+  background-color: #e0d0ed;
+  border: none;
+  border-radius: 0.2em;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #d0abf1;
+}

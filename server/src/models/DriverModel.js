@@ -13,7 +13,7 @@ const DriverModel = (sequelize) => {
         primaryKey: true,
         allowNull: false,
       },
-      idAPI: {
+      idDB: {
         type:DataTypes.INTEGER,
         allowNull: false,
       },

@@ -43,8 +43,8 @@ const functControllerGen = async () => {
     };
 
     class Driver001 {
-      constructor(idAPI, forename, surname, description, image, nationality, teams, dob) {
-        this.idAPI= idAPI;
+      constructor(idDB, forename, surname, description, image, nationality, teams, dob) {
+        this.idDB= idDB;
         this.forename = forename;
         this.surname = surname;
         this.description = description;

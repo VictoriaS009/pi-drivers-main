@@ -1,0 +1,146 @@
+.container {
+  margin: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.back {
+  width: 2em;
+  height: 2em;
+  margin: 1em;
+}
+
+.back:hover {
+  width: 2.3em;
+  height: 2.3em;
+}
+
+.imgContainer {
+  width: 16em;
+  height: 22em;
+  overflow: hidden;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.teams {
+  grid-area: teams;
+}
+
+.id {
+  grid-area: id;
+}
+
+.name {
+  grid-area: name;
+}
+
+.description {
+  grid-area: description;
+}
+
+.nationality {
+  grid-area: nationality;
+}
+
+.dob {
+  grid-area: dob;
+}
+
+.infoContainer {
+  width: 70vw;
+  height: 80vh;
+  padding: 1em;
+  margin: 1em;
+  border: solid #e1e1e1b4 2px;
+  border-radius: 0.3em;
+  display: grid;
+  grid-template-columns: 20em auto 20em;
+  grid-template-rows: repeat(5em);
+  grid-template-areas:
+    "teams . id"
+    "name name name"
+    "description description description"
+    "nationality . dob";
+  font-size: 14px;
+  color: #e1e1e1;
+}
+
+.teams {
+  margin: 0;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-decoration: underline;
+}
+
+.teamsText {
+  color: #f20024;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+
+.id {
+  margin: 0;
+  text-align: end;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+.name {
+  margin: 0;
+  margin-top: 0.4em;
+  padding-top: 0.3em;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  border-top: solid 1px #e1e1e1;
+  text-decoration: underline;
+}
+
+.description {
+  margin: 0;
+  margin-bottom: 0.4em;
+  padding: 0.5em;
+  border-top: solid 1px #e1e1e1;
+  border-bottom: solid 1px #e1e1e1;
+  text-decoration: underline;
+}
+
+.descriptionText {
+  font-size: 0.7em;
+  text-decoration: none;
+}
+
+.nationality {
+  margin: 0;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-decoration: underline;
+}
+
+.nationalityText {
+  color: #f20024;
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.dob {
+  margin: 0;
+  font-weight: bold;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-decoration: underline;
+}
+
+.dobText {
+  color: #f20024;
+  font-size: 0.8rem;
+  text-decoration: none;
+}

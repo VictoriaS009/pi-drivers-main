@@ -4,43 +4,46 @@ require("dotenv").config();
 
 const { API } = process.env;
 
-
 const teamsController = async () => {
-  let tableTeam = await Team.findAll();
-  
-  if (tableTeam.length > 0) {
-    return tableTeam;
-  };
+  try {
+    let tableTeam = await Team.findAll();
 
-  let unicoTeamsSet = new Set();
-  let unicoTeamsArray = [];
-  
-  const { data } = await axios.get(API);
-  // Recorrer data y extraer teams
-  
-  data.forEach(obj => {
-    if (obj.teams) {
-      const teamsString = obj.teams;
-
-     // Dividir la cadena en teams en un array
-      const teamsArray = teamsString.split(',');
-
-
-      // Agregar cada equipo al conjunto (Set) para evitar duplicados
-      teamsArray.forEach(team => unicoTeamsSet.add(team.trim()));
+    if (tableTeam.length > 0) {
+      return tableTeam;
     }
-  });
-  // Convertir el conjunto a un array
-  unicoTeamsArray = [...unicoTeamsSet];
-  // en este punto hay un array sin equipos repetidos
 
-  // Almacena los nombres de los equipos en la tabla Teams
-  await Team.bulkCreate(unicoTeamsArray.map(name => ({ name })));
-  tableTeam = await Team.findAll();
+    let uniqueTeamsSet = new Set();
+    let uniqueTeamsArray = [];
 
-  return tableTeam;
+    const { data } = await axios.get(API);
+
+    // Recorrer data y extraer teams
+    data.forEach((obj) => {
+      if (obj.teams) {
+        const teamsString = obj.teams;
+
+        // Dividir la cadena en teams en un array
+        const teamsArray = teamsString.split(',');
+
+        // Agregar cada equipo al conjunto (Set) para evitar duplicados
+        teamsArray.forEach((team) => uniqueTeamsSet.add(team.trim()));
+      }
+    });
+
+    // Convertir el conjunto a un array
+    uniqueTeamsArray = [...uniqueTeamsSet];
+
+    // en este punto hay un array sin equipos repetidos
+
+    // Almacena los nombres de los equipos en la tabla Teams
+    await Team.bulkCreate(uniqueTeamsArray.map((name) => ({ name })));
+    tableTeam = await Team.findAll();
+
+    return tableTeam;
+  } catch (error) {
+    console.error("Error:", error.message);
+    throw new Error("Internal Server Error");
+  }
 };
-
-
 
 module.exports = { teamsController };

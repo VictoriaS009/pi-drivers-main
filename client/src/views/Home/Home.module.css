@@ -1,0 +1,30 @@
+.slctContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.slct {
+  background-color: #170d21;
+  color: #e8e8e8;
+  border: solid #170d21;
+  border-radius: 0.4em;
+  margin: 3em;
+  padding: 0.2em;
+  width: 15%;
+}
+
+.btn {
+  background-color: #170d21;
+  color: #e8e8e8;
+  border: solid #170d21;
+  border-radius: 0.4em;
+  margin: 3em;
+  padding: 0.2em;
+  width: 15%;
+}
+
+.btn:hover {
+  border: solid #e8e8e8;
+}
