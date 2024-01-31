@@ -50,7 +50,7 @@ const postDriversController = async (forename, surname, description, image, nati
       image,
       nationality,
       teams,
-      dob,
+      dob: dob.split("T")[0],
     });
 
     console.log("A new driver has been stored in the database:", newDriver.toJSON());

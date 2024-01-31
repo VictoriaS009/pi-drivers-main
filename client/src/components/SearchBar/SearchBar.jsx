@@ -1,38 +1,30 @@
-import { useState } from "react";
-import style from "./SearchBar.module.css";
-import searchIcon from "../../assets/images/Search-icon.png";
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { getDriverByName } from "../../redux/actions";
+import "./SearchBar"
 
-const SearchBar = ({ onSearch }) => {
-  const [searchDriver, setSearchDriver] = useState("");
-
-  const handleInputChange = (e) => {
-    setSearchDriver(e.target.value);
-  };
+const SearchBar = () => {
+  const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
-    onSearch(searchDriver);
-    setSearchDriver("");
+    if (searchTerm.trim() !== "") {
+      dispatch(getDriverByName(searchTerm));
+    }
   };
 
   return (
-    <div className={style.container}>
-      <div className={style.inputContainer}>
-        <input
-          type="text"
-          placeholder="Search by driver name"
-          value={searchDriver}
-          onChange={handleInputChange}
-          className={style.input}
-        />
-        <img
-          src={searchIcon}
-          alt="search-icon"
-          onClick={handleSearch}
-          className={style.img}
-        />
-      </div>
+    <div className="search-bar">
+      <input
+        type="text"
+        placeholder="Search for a driver by its forename or surname"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
     </div>
   );
 };
 
 export default SearchBar;
+

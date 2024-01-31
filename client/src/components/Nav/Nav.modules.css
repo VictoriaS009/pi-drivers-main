@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff; 
+    border-bottom: 1px solid #e1e4e8; 
+    flex-direction: row;
+    width: 100%;
+  }
+  
+  /* Button styles */
+  .container button {
+    background-color: #0366d6; 
+    color: #ffffff;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+  }
+  
+  .container button:hover {
+    background-color: #004080; 
+  }
+  
+  .landingButton {
+    background-color: #28a745; 
+  }
+  
+  .homeButton {
+    background-color: #0366d6; 
+  }
+  
+  .cardsapiButton {
+    background-color: #6f42c1; 
+  }
+  
+  .cardsdbButton {
+    background-color: #28a745; 
+  }
+  
+  .cardsXTeams {
+    background-color: #d73a49; 
+  }
+  
+  .formButton {
+    background-color: #0366d6; 
+  }
+  

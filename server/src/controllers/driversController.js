@@ -13,6 +13,7 @@ const driversController = async () => {
     data.forEach((obj) => {
       try {
         const {
+          id,
           name: { forename, surname },
           dob,
         } = obj;
@@ -32,6 +33,7 @@ const driversController = async () => {
         };
 
         const driverAPI = {
+          id,
           name: `${forename} ${surname}`,
           image: url,
           teams: teamsArr,
@@ -48,9 +50,10 @@ const driversController = async () => {
 
     if (tableDrivers.length > 0) {
       tableDrivers.forEach((e) => {
-        const { forename, surname, image, teams } = e;
+        const { idDB, forename, surname, image, teams } = e;
 
         const driverDB = {
+          idDB,
           name: `${forename} ${surname}`,
           image,
           teams,
@@ -68,3 +71,4 @@ const driversController = async () => {
 };
 
 module.exports = { driversController };
+

@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.welcome {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.driver {
+  color: #0366d6; /* GitHub blue */
+}
+
+.message {
+  font-size: 1.2em;
+  color: #586069; /* GitHub gray */
+}
+
+.buttonSTART {
+  background-color: #28a745; /* GitHub green */
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttonSTART:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.F1 {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.F1 iframe {
+  width: 100%;
+  max-width: 560px;
+  height: 315px;
+  margin-bottom: 20px;
+}

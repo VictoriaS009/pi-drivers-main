@@ -1,5 +1,5 @@
 {
-  "forename": "Lewis",
+  "forename": "Pedro",
   "surname": "Hamilton",
   "description": "Sir Lewis Carl Davidson Hamilton MBE HonFREng (born 7 January 1985) is a British racing driver...",
   "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg",
@@ -9,7 +9,7 @@
 }
 
 {
-  "forename": "lucho",
+  "forename": "Pecho",
   "surname": "Hamilton",
   "description": "Sir Lewis Carl Davidson Hamilton MBE HonFREng (born 7 January 1985) is a British racing driver...",
   "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg",
@@ -22,7 +22,7 @@
   "forename": "Temistocles",
   "surname": "elPerro",
   "description": "Sir Perro",
-  "image": "https://nosoyimagen.jpg",
+  "image": "https://cdn.pixabay.com/photo/2013/07/12/15/36/motorsports-150157_960_720.png",
   "nationality": "Narnia",
   "teams": ["AutosLocos"],
   "dob": "1321-01-07"
