@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDrivers } from "../../redux/actions";
 import { Link, useNavigate } from "react-router-dom";
-
+import Card from "../../components/Card/CArd";
 const CardsDB = () => {
   const dispatch = useDispatch();
   const drivers = useSelector((state) => state.drivers);
@@ -29,31 +29,23 @@ const CardsDB = () => {
 
     fetchData();
   }, [dispatch]);
-
+  const cardsContainer = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0'
+  }
   return (
-    <div>
+    <div styles={cardsContainer}>
       {loading ? (
         <p>Loading drivers ...</p>
       ) : (
         <>
           {currentDrivers.map((driver) => (
-            <div
-              key={getDriverId(driver)}
-              className="driver-card"
-              onClick={() => navigate(`/detail/${getDriverId(driver)}`)}
-            >
-              <h3>{driver.name}</h3>
-              <img src={driver.image} alt={driver.name} className="driver-image" />
-              <div className="teams">
-                <h4>Teams:</h4>
-                <ul>
-                  {driver.teams.map((team, index) => (
-                    <li key={index}>{team}</li>
-                  ))}
-                </ul>
-              </div>
-              <p>Click on the image to get more information about the driver.</p>
-            </div>
+            <Card key={getDriverId(driver)} driver={driver} />
+          
           ))}
           <div className="paginationControls">
             <button

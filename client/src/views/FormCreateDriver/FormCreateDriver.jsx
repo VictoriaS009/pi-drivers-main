@@ -92,9 +92,32 @@ const FormCreateDriver = () => {
     color: '#fff',
     padding: '20px',
     borderRadius: '20px',
+    display: 'grid',
+    gridTemplateColumns: '3fr 1fr',
+    gridGap: '20px',
+    margin: '20px',
+  };
+
+  const gridAreaStyle = {
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px'
+    gap: '10px',
+  };
+
+  const teamContainerStyle = {
+    maxHeight: '580px', 
+    overflowY: 'auto',  
+    padding: '10px',
+    border: '1px solid #e1e4e8', 
+    borderRadius: '10px', 
+    margin: '10px 0' 
+  };
+
+  const bottomSectionStyle = {
+    gridColumn: '1 / -1',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '10px',
   };
 
   const inputStyle = {
@@ -102,7 +125,15 @@ const FormCreateDriver = () => {
     borderRadius: '10px',
     border: '1px solid #e1e4e8',
     backgroundColor: '#fff',
-    color: '#000'
+    color: '#000',
+    width : '100%',    
+  };
+  const inputStyleCheck = {
+    padding: '10px',
+    borderRadius: '10px',
+    border: '1px solid #e1e4e8',
+    backgroundColor: '#fff',
+    color: '#000',
   };
 
   const buttonStyle = {
@@ -130,12 +161,15 @@ const FormCreateDriver = () => {
     <div>
       <h2 style={{ color: '#fff' }}>New Driver</h2>
       <form style={formStyle}>
+      <div style={gridAreaStyle}>
+
         <p>
           <strong>Forename, Surname, and Nationality</strong> must begin with a capital letter and cannot contain spaces. Only characters from the English alphabet are allowed.
         </p>
         <div>
         <label style={labelStyle}>Forename:</label>
-          <input
+          <input style={inputStyle}
+
             type="text"
             value={forename}
             onChange={(e) => setForename(e.target.value)}
@@ -144,7 +178,8 @@ const FormCreateDriver = () => {
         </div>
         <div>
           <label style={labelStyle}>Surname:</label>
-          <input
+          <input style={inputStyle}
+
             type="text"
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
@@ -153,7 +188,8 @@ const FormCreateDriver = () => {
         </div>
         <div>
           <label style={labelStyle}>Nationality:</label>
-          <input
+          <input style={inputStyle}
+
             type="text"
             value={nationality}
             onChange={(e) => setNationality(e.target.value)}
@@ -162,7 +198,8 @@ const FormCreateDriver = () => {
         </div>
         <div>
           <label style={labelStyle}>Description:</label>
-          <input
+          <textarea style={{...inputStyle, height: '87px', textJustify: 'start', textAlign: 'start' }}
+
             type="text"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -171,7 +208,8 @@ const FormCreateDriver = () => {
         </div>
         <div>
           <label style={labelStyle}>Image:</label>
-          <input
+          <input style={inputStyle}
+
             type="text"
             value={image}
             onChange={(e) => setImage(e.target.value)}
@@ -180,31 +218,42 @@ const FormCreateDriver = () => {
         </div>
         <div>
           <label style={labelStyle}>Date of Birth:</label>
-          <input
+          <input style={inputStyle}
+
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value.split("T")[0])}
           />
         </div>
-        <div>
-          <label style={labelStyle}>Teams:</label>
-          {teams.map((team) => (
-            <div key={team.id}>
-              <input
-                type="checkbox"
-                id={team.name}
-                value={team.name}
-                checked={selectedTeams.includes(team.name)}
-                onChange={() => handleTeamChange(team.name)}
-              />
-              <label htmlFor={team.name}>{team.name}</label>
-            </div>
-          ))}
         </div>
-        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-        <button type="button" onClick={handleSend}>
+        <div style={gridAreaStyle}>
+  <div>
+    <label style={labelStyle}>Teams:</label>
+    <div style={teamContainerStyle}>
+      {teams.map((team) => (
+        <div key={team.id}>
+          <input 
+            style={inputStyleCheck}
+            type="checkbox"
+            id={team.name}
+            value={team.name}
+            checked={selectedTeams.includes(team.name)}
+            onChange={() => handleTeamChange(team.name)}
+          />
+          <label htmlFor={team.name}>{team.name}</label>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+        <div style={bottomSectionStyle}>
+
+        {errorMessage && <p style={errorMessageStyle}>{errorMessage}</p>}
+        <button type="button" onClick={handleSend} style={buttonStyle}> 
           Send Driver
         </button>
+        </div>
+
       </form>
     </div>
   );

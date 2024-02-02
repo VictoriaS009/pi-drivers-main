@@ -6,5 +6,6 @@ const teamsRouter = Router();
 
 teamsRouter.get("/", getHandlerTeams);
 
+
 module.exports = teamsRouter;
 

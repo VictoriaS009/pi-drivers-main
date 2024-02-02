@@ -34,7 +34,8 @@ const teamsController = async () => {
     uniqueTeamsArray = [...uniqueTeamsSet];
 
     // en este punto hay un array sin equipos repetidos
-
+     // Ordenar alfabéticamente
+     uniqueTeamsArray.sort();
     // Almacena los nombres de los equipos en la tabla Teams
     await Team.bulkCreate(uniqueTeamsArray.map((name) => ({ name })));
     tableTeam = await Team.findAll();

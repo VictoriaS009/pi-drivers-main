@@ -14,4 +14,6 @@ const getHandlerTeams = async (req, res) => {
   }
 };
 
+
+
 module.exports = { getHandlerTeams };

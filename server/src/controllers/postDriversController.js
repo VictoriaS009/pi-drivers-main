@@ -14,7 +14,7 @@ const postDriversController = async (forename, surname, description, image, nati
     }
 
     // Realiza la búsqueda basada en forename, surname, nationality
-    let existingDriverAPI = await Driver.findOne({
+    let existingDriverDB = await Driver.findOne({
       where: {
         [Op.and]: [
           { forename: { [Op.iLike]: `%${forename}%` } },
@@ -25,20 +25,20 @@ const postDriversController = async (forename, surname, description, image, nati
     });
 
     // Si ya existe un conductor con la misma información, retorna un mensaje
-    if (existingDriverAPI) {
+    if (existingDriverDB) {
       return `Driver ${forename} ${surname} is already in the database`;
     }
 
     const { data } = await axios.get(API);
 
-    const existingDriverDB = data.find((driver) =>
+    const existingDriverAPI = data.find((driver) =>
       driver.name.forename.toLowerCase().includes(forename.toLowerCase()) &&
       driver.name.surname.toLowerCase().includes(surname.toLowerCase()) &&
       driver.nationality.toLowerCase().includes(nationality.toLowerCase())
     );
 
-    if (existingDriverDB) {
-      return `Driver ${forename} ${surname} is already in the database`;
+    if (existingDriverAPI) {
+      return `Driver ${forename} ${surname} is already in the API`;
     }
 
     // Crea un nuevo objeto Driver con el idDB generado y almacénalo en la base de datos

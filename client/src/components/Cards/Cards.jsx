@@ -1,116 +1,99 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDrivers } from "../../redux/actions";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Card from "../Card/Card"; // Asegúrate de ajustar la importación del componente Card según la ubicación real
 
 const Cards = () => {
-  // Hooks para Redux
-  const dispatch = useDispatch(); 
-  const drivers = useSelector((state) => state.drivers); 
-  const [loading, setLoading] = useState(true); 
-  const navigate = useNavigate(); // da f navigate para moverse entre rutas
+  const dispatch = useDispatch();
+  const drivers = useSelector((state) => state.drivers);
+  const [loading, setLoading] = useState(true);
+  const [sortedDrivers, setSortedDrivers] = useState([]);
+  const [sortOrder, setSortOrder] = useState(null);
+  const navigate = useNavigate();
 
-  
   const getDriverId = (driver) => {
-    return driver.idDB || driver.id; 
+    return driver.idDB || driver.id;
   };
 
-  // Pag: Definiendo estados y lógica
-  const [currentPage, setCurrentPage] = useState(1); // pag actual
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
-  const indexOfLastItem = currentPage * itemsPerPage; // índice del último elemento en la página actual (1*9)
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage; // índice del primer elemento en la página actual
-  const currentDrivers = drivers.slice(indexOfFirstItem, indexOfLastItem); // lista de conductores a mostrar
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentDrivers = sortedDrivers.slice(indexOfFirstItem, indexOfLastItem);
 
-  // useEffect: Operaciones al montar el componente (carga de conductores)
   useEffect(() => {
     const fetchData = async () => {
-      await dispatch(getDrivers()); // traer la info de conductores
-      setLoading(false); // ya no estamos cargando, todo ok
+      await dispatch(getDrivers());
+      setLoading(false);
     };
 
-    fetchData(); // ejecuta la función asincrónica
-  }, [dispatch]); // solo se ejecuta cuando el dispatch cambia, no siempre
+    fetchData();
+  }, [dispatch]);
 
+  const handleSort = (order) => {
+    // Copia el arreglo original y ordena según el criterio
+    const sorted = [...drivers];
+    sorted.sort((a, b) => {
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      return order === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+    });
 
- // Estilos en línea
- const driverCardStyle = {
-  backgroundColor: '#000', 
-  border: '1px solid #e1e4e8',
-  borderRadius: '50px',
-  padding: '20px',
-  margin: '10px',
-  cursor: 'pointer',
-  transition: 'transform 0.3s',
-  display: 'flex',
-  gap: '40px',
-};
+    setSortedDrivers(sorted);
+    setSortOrder(order);
+  };
 
-const driverImageStyle = {
-  height: '20rem',
-  width: 'auto',
-  borderRadius: '25px',
+  // Estilos en línea
+  const cardsContainer = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0'
+  };
 
-  marginBottom: '10px'
-};
+  const paginationControlsStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0'
+  };
 
-const teamsStyle = {
-  listStyleType: 'none',
-  paddingLeft: '0',
-  gap: '10px',
-};
-
-const paginationControlsStyle = {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  margin: '20px 0'
-};
-
-const paginationButtonStyle = {
-  backgroundColor: '#0366d6', // azul
-  color: '#ffffff',
-  padding: '10px 20px',
-  margin: '0 5px',
-  border: 'none',
-  cursor: 'pointer',
-  fontSize: '1em',
-  transition: 'background-color 0.3s'
-};
-
-const paginationButtonHover = {
-  backgroundColor: '#004080' // azul oscuro
-};
+  const paginationButtonStyle = {
+    backgroundColor: '#0366d6', // azul
+    color: '#ffffff',
+    padding: '10px 20px',
+    margin: '0 5px',
+    border: 'none',
+    cursor: 'pointer',
+    fontSize: '1em',
+    transition: 'background-color 0.3s'
+  };
 
   return (
-    <div>
+    <div style={cardsContainer}>
       {loading ? (
-        <p>Loading drivers ...</p> // mostramos esto mientras cargamos los conductores
+        <p>Loading drivers ...</p>
       ) : (
         <>
-          {currentDrivers.map((driver) => (
-        <div
-          key={getDriverId(driver)}
-          style={driverCardStyle}
-
-          onClick={() => navigate(`/detail/${getDriverId(driver)}`)}
-        >
-          <img src={driver.image} alt={driver.name} style={driverImageStyle} />
-          <div className="teams" style={teamsStyle}>
-          <h3>{driver.name}</h3>
-            <h4>Teams:</h4>
-            <ul>
-              {driver.teams.map((team, index) => (
-                <li key={index}>{team}</li>
-              ))}
-            </ul>
-          <p>Click on the image to get more information about the driver.</p>
+          <div>
+            <p>Do you want to sort alphabetically ascending or descending?</p>
+            <button style={paginationButtonStyle} onClick={() => handleSort("asc")}>
+              Ascending
+            </button>
+            <button style={paginationButtonStyle} onClick={() => handleSort("desc")}>
+              Descending
+            </button>
           </div>
-        </div>
-      ))}
+          {currentDrivers.map((driver) => (
+            <Card key={getDriverId(driver)} driver={driver} />
+          ))}
           {/* Controles de paginación para navegar entre páginas de conductores */}
           <div style={paginationControlsStyle}>
             <button
+              style={paginationButtonStyle}
               className="paginationButton"
               onClick={() => setCurrentPage(1)}
               disabled={currentPage === 1}
@@ -118,6 +101,7 @@ const paginationButtonHover = {
               First
             </button>
             <button
+              style={paginationButtonStyle}
               className="paginationButton"
               onClick={() => setCurrentPage(currentPage - 1)}
               disabled={currentPage === 1}
@@ -126,6 +110,7 @@ const paginationButtonHover = {
             </button>
             <span>{currentPage}</span>
             <button
+              style={paginationButtonStyle}
               className="paginationButton"
               onClick={() => setCurrentPage(currentPage + 1)}
               disabled={indexOfLastItem >= drivers.length}
@@ -133,6 +118,7 @@ const paginationButtonHover = {
               &gt;
             </button>
             <button
+              style={paginationButtonStyle}
               className="paginationButton"
               onClick={() =>
                 setCurrentPage(Math.ceil(drivers.length / itemsPerPage))

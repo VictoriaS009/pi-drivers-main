@@ -15,7 +15,7 @@ function App() {
   const appStyle = {
     fontFamily: "'Arial', sans-serif",
     backgroundColor: '#f6f8fa',
-    width: '100%',
+    width: '100vw',
     backgroundImage: 'url("https://res.cloudinary.com/dhjlbf6xs/image/upload/v1706723086/pokemon/SL-072519-21910-21_lgb2qa.jpg")',
     backgroundSize: 'cover',
     backgroundPosition: 'center'

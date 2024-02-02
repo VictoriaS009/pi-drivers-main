@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeams, getDrivers } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import Card from "../../components/Card/CArd";
 
 const CarsXTeams = () => {
   // Hooks para Redux
@@ -27,9 +28,17 @@ const CarsXTeams = () => {
   const handleTeamClick = (team) => {
     setSelectedTeam(team);
   };
+  const cardsContainer = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0'
+  }
 
   return (
-    <div>
+    <div styles={cardsContainer}>
       {loading ? (
         <p>Loading teams ...</p>
       ) : (
@@ -53,23 +62,8 @@ const CarsXTeams = () => {
                 return driver.teams.includes(selectedTeam);
               })
               .map((driver) => (
-                <div
-                  key={driver.idDB || driver.id}
-                  className="driver-card"
-                  onClick={() => navigate(`/detail/${driver.idDB || driver.id}`)}
-                >
-                  <h3>{driver.name}</h3>
-                  <img src={driver.image} alt={driver.name} className="driver-image" />
-                  <div className="teams">
-                    <h4>Teams:</h4>
-                    <ul>
-                      {driver.teams.map((team, index) => (
-                        <li key={index}>{team}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <p>Click on the image to get more information about the driver.</p>
-                </div>
+                <Card key={driver.idDB || driver.id} driver={driver} onClick={() => navigate(`/detail/${driver.idDB || driver.id}`)} />
+  
               ))}
           </div>
         </>

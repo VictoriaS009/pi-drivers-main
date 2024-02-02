@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDrivers } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
+import Card from "../../components/Card/CArd";
+
 
 const CardsAPI = () => {
   const dispatch = useDispatch();
@@ -43,37 +45,31 @@ const CardsAPI = () => {
     setSortOrder(order);
   };
 
+
+  const cardsContainer = {
+    display: 'flex',
+    flexWrap: 'wrap',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: '20px 0'
+  }
   return (
-    <div>
+    <div style={cardsContainer}>
       {loading ? (
         <p>Loading drivers ...</p>
       ) : (
         <>
           <div>
-            <p>Do you want to sort by date ascending or descending?</p>
+            <p>Do you want to sort by birthdate ascending or descending?</p>
             <button onClick={() => handleSort("asc")}>Ascending</button>
             <button onClick={() => handleSort("desc")}>Descending</button>
           </div>
           {currentDrivers.map((driver) => {
             const driverId = getDriverId(driver);
             return driverId !== null ? (
-              <div
-                key={driverId}
-                className="driver-card"
-                onClick={() => navigate(`/detail/${driverId}`)}
-              >
-                <h3>{driver.name}</h3>
-                <img src={driver.image} alt={driver.name} className="driver-image" />
-                <div className="teams">
-                  <h4>Teams:</h4>
-                  <ul>
-                    {driver.teams.map((team, index) => (
-                      <li key={index}>{team}</li>
-                    ))}
-                  </ul>
-                </div>
-                <p>Click on the image to get more information about the driver.</p>
-              </div>
+              <Card key={driverId} driver={driver} />
+
             ) : null;
           })}
           <div className="paginationControls">

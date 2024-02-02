@@ -10,7 +10,7 @@ const Nav = (onSearch) => {
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: '20px',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#aaa',
     borderBottom: '1px solid #e1e4e8',
     flexDirection: 'row',
     width: '100%'

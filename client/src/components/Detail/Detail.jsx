@@ -47,7 +47,7 @@ const teamsStyle = {
 <div>
       {driver ? (
         <div style={driverDetailStyle}>
-          <h2>{driver.name}</h2>
+          <h2>{driver.forename} {driver.surname}</h2>
           <img src={driver.image} alt={driver.name} style={driverImageStyle} />
           <p>{driver.description || "No description available."}</p>
           <p>Nationality: {driver.nationality}</p>
