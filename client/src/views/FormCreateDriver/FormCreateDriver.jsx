@@ -13,41 +13,38 @@ const FormCreateDriver = () => {
   const [image, setImage] = useState("");
   const [date, setDate] = useState("");
   const [selectedTeams, setSelectedTeams] = useState(["No team registration"]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessages, setErrorMessages] = useState({
+    forename: "",
+    surname: "",
+    nationality: "",
+    date: "",
+    image: ""
+  });
 
-  const validateInputs = (forename, surname, nationality, image, date) => {
-    const nameRegex = /^[A-Z][a-zA-Z]*$/;
+  useEffect(() => {
+    dispatch(getTeams());
+  }, [dispatch]);
 
-    if (!nameRegex.test(forename) || !nameRegex.test(surname) || !nameRegex.test(nationality)) {
-      setErrorMessage(
-        "Forename, Surname, and Nationality must begin with a capital letter and cannot contain spaces. Only characters from the English alphabet are allowed."
-      );
-      return false;
-    }
+  useEffect(() => {
+    validateInputs();
+  }, [forename, surname, nationality, date, image]);
 
-    if (description.includes("no description") && description !== "This **driver** does not have a description available.") {
-      setErrorMessage("Invalid description format.");
-      return false;
-    }
-
-    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    if (image !== "" && !urlRegex.test(image)) {
-      setErrorMessage("Invalid image URL format.");
-      return false;
-    }
-
+  const validateInputs = () => {
+    const nameRegex = /^[A-Z][a-z]*$/;
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-    if (date !== "" && !dateRegex.test(date)) {
-      setErrorMessage("Invalid date of birth format.");
-      return false;
-    }
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
 
-    setErrorMessage("");
-    return true;
+    setErrorMessages({
+      forename: !nameRegex.test(forename) ? "Forename must begin with a capital letter and only contain characters from the English alphabet." : "",
+      surname: !nameRegex.test(surname) ? "Surname must begin with a capital letter and only contain characters from the English alphabet." : "",
+      nationality: !nameRegex.test(nationality) ? "Nationality must begin with a capital letter and only contain characters from the English alphabet." : "",
+      date: !dateRegex.test(date) ? "Date of Birth must be in the format YYYY-MM-DD." : "",
+      image: image && !urlRegex.test(image) ? "Please enter a valid web link for the image." : ""
+    });
   };
 
   const handleSend = async () => {
-    if (!validateInputs(forename, surname, nationality, image, date)) {
+    if (Object.values(errorMessages).some((msg) => msg !== "")) {
       return;
     }
 
@@ -59,7 +56,7 @@ const FormCreateDriver = () => {
         description,
         image,
         teams: selectedTeams,
-        dob: date, //?.split("T")[0]
+        dob: date,
       };
 
       await dispatch(postDriver(driver));
@@ -82,10 +79,6 @@ const FormCreateDriver = () => {
 
     setSelectedTeams(updatedTeams);
   };
-
-  useEffect(() => {
-    dispatch(getTeams());
-  }, [dispatch]);
 
   const formStyle = {
     backgroundColor: '#000',
@@ -143,7 +136,9 @@ const FormCreateDriver = () => {
     border: 'none',
     cursor: 'pointer',
     borderRadius: '10px',
-    marginTop: '10px'
+    marginTop: '10px',
+    opacity: Object.values(errorMessages).some((msg) => msg !== "") ? '0.5' : '1',
+    pointerEvents: Object.values(errorMessages).some((msg) => msg !== "") ? 'none' : 'auto',
   };
 
   const labelStyle = {
@@ -154,106 +149,100 @@ const FormCreateDriver = () => {
     color: 'red',
     marginTop: '10px'
   };
-  
-
 
   return (
     <div>
       <h2 style={{ color: '#fff' }}>New Driver</h2>
       <form style={formStyle}>
-      <div style={gridAreaStyle}>
-
-        <p>
-          <strong>Forename, Surname, and Nationality</strong> must begin with a capital letter and cannot contain spaces. Only characters from the English alphabet are allowed.
-        </p>
-        <div>
-        <label style={labelStyle}>Forename:</label>
-          <input style={inputStyle}
-
-            type="text"
-            value={forename}
-            onChange={(e) => setForename(e.target.value)}
-            placeholder="Daniel"
-          />
-        </div>
-        <div>
-          <label style={labelStyle}>Surname:</label>
-          <input style={inputStyle}
-
-            type="text"
-            value={surname}
-            onChange={(e) => setSurname(e.target.value)}
-            placeholder="Rabinovich"
-          />
-        </div>
-        <div>
-          <label style={labelStyle}>Nationality:</label>
-          <input style={inputStyle}
-
-            type="text"
-            value={nationality}
-            onChange={(e) => setNationality(e.target.value)}
-            placeholder="Argentine"
-          />
-        </div>
-        <div>
-          <label style={labelStyle}>Description:</label>
-          <textarea style={{...inputStyle, height: '87px', textJustify: 'start', textAlign: 'start' }}
-
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="This data is not necessary"
-          />
-        </div>
-        <div>
-          <label style={labelStyle}>Image:</label>
-          <input style={inputStyle}
-
-            type="text"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-            placeholder="You can add a web link from an image"
-          />
-        </div>
-        <div>
-          <label style={labelStyle}>Date of Birth:</label>
-          <input style={inputStyle}
-
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value.split("T")[0])}
-          />
-        </div>
+        <div style={gridAreaStyle}>
+          <p>
+            <strong>Forename, Surname, and Nationality</strong> must begin with a capital letter and cannot contain spaces, besides, <strong>description</strong> must be between 30 and 500 characters. Only characters from the English alphabet are allowed.
+          </p>
+          <div>
+            <label style={labelStyle}>Forename:</label>
+            <input style={inputStyle}
+              type="text"
+              value={forename}
+              onChange={(e) => setForename(e.target.value)}
+              placeholder="Daniel"
+            />
+            {errorMessages.forename && <p style={errorMessageStyle}>{errorMessages.forename}</p>}
+          </div>
+          <div>
+            <label style={labelStyle}>Surname:</label>
+            <input style={inputStyle}
+              type="text"
+              value={surname}
+              onChange={(e) => setSurname(e.target.value)}
+              placeholder="Rabinovich"
+            />
+            {errorMessages.surname && <p style={errorMessageStyle}>{errorMessages.surname}</p>}
+          </div>
+          <div>
+            <label style={labelStyle}>Nationality:</label>
+            <input style={inputStyle}
+              type="text"
+              value={nationality}
+              onChange={(e) => setNationality(e.target.value)}
+              placeholder="Argentine"
+            />
+            {errorMessages.nationality && <p style={errorMessageStyle}>{errorMessages.nationality}</p>}
+          </div>
+          <div>
+            <label style={labelStyle}>Description:</label>
+            <textarea style={{...inputStyle, height: '87px', textJustify: 'start', textAlign: 'start' }}
+              type="text"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="This data is not necessary"
+            />
+          </div>
+          <div>
+            <label style={labelStyle}>Image:</label>
+            <input style={inputStyle}
+              type="text"
+              value={image}
+              onChange={(e) => setImage(e.target.value)}
+              placeholder="You can add a web link from an image"
+            />
+            {errorMessages.image && <p style={errorMessageStyle}>{errorMessages.image}</p>}
+          </div>
+          <div>
+            <label style={labelStyle}>Date of Birth:</label>
+            <input style={inputStyle}
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value.split("T")[0])}
+            />
+            {errorMessages.date && <p style={errorMessageStyle}>{errorMessages.date}</p>}
+          </div>
         </div>
         <div style={gridAreaStyle}>
-  <div>
-    <label style={labelStyle}>Teams:</label>
-    <div style={teamContainerStyle}>
-      {teams.map((team) => (
-        <div key={team.id}>
-          <input 
-            style={inputStyleCheck}
-            type="checkbox"
-            id={team.name}
-            value={team.name}
-            checked={selectedTeams.includes(team.name)}
-            onChange={() => handleTeamChange(team.name)}
-          />
-          <label htmlFor={team.name}>{team.name}</label>
+          <div>
+            <label style={labelStyle}>Teams:</label>
+            <div style={teamContainerStyle}>
+              {teams.map((team) => (
+                <div key={team.id}>
+                  <input 
+                    style={inputStyleCheck}
+                    type="checkbox"
+                    id={team.name}
+                    value={team.name}
+                    checked={selectedTeams.includes(team.name)}
+                    onChange={() => handleTeamChange(team.name)}
+                  />
+                  <label htmlFor={team.name} style={labelStyle}>{team.name}</label>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
         <div style={bottomSectionStyle}>
-
-        {errorMessage && <p style={errorMessageStyle}>{errorMessage}</p>}
-        <button type="button" onClick={handleSend} style={buttonStyle}> 
-          Send Driver
-        </button>
+          {Object.values(errorMessages).some((msg) => msg !== "") && <p style={errorMessageStyle}>Please fix the errors before submitting.</p>}
+          <button type="button" onClick={handleSend} style={buttonStyle} disabled={Object.values(errorMessages).some((msg) => msg !== "")}> 
+            Send Driver
+          </button>
         </div>
-
       </form>
     </div>
   );

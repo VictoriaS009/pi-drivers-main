@@ -42,7 +42,7 @@ const DriverModel = (sequelize) => {
         allowNull: false,
       },
       dob: {
-        type: DataTypes.DATE,
+        type: DataTypes.STRING,
         allowNull: false,
       },
     },

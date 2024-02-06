@@ -12,7 +12,7 @@ const postDriversController = async (forename, surname, description, image, nati
     while (await Driver.findOne({ where: { idDB } })) {
       idDB++;
     }
-
+    console.log(dob);
     // Realiza la búsqueda basada en forename, surname, nationality
     let existingDriverDB = await Driver.findOne({
       where: {
@@ -20,6 +20,7 @@ const postDriversController = async (forename, surname, description, image, nati
           { forename: { [Op.iLike]: `%${forename}%` } },
           { surname: { [Op.iLike]: `%${surname}%` } },
           { nationality: { [Op.iLike]: `%${nationality}%` } },
+          { dob: { [Op.iLike]: `%${dob}%` } },
         ],
       },
     });
@@ -34,7 +35,8 @@ const postDriversController = async (forename, surname, description, image, nati
     const existingDriverAPI = data.find((driver) =>
       driver.name.forename.toLowerCase().includes(forename.toLowerCase()) &&
       driver.name.surname.toLowerCase().includes(surname.toLowerCase()) &&
-      driver.nationality.toLowerCase().includes(nationality.toLowerCase())
+      driver.nationality.toLowerCase().includes(nationality.toLowerCase()) && 
+      driver.dob.toLowerCase().includes(dob.toLowerCase())
     );
 
     if (existingDriverAPI) {

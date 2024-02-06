@@ -65,17 +65,39 @@ export const postDriver = (driver) => {
         "http://localhost:3001/drivers",
         driver
       );
+
+      const responseData = response.data.answer;
+
       dispatch({
         type: "POST_DRIVER",
-        payload: response.data.answer,
+        payload: responseData,
       });
-      alert("The Driver was stored in the database");
+
+      alert(JSON.stringify(responseData, null, 2));
     } catch (error) {
       alert(error.request?.response);
     }
   };
 };
 
+
+
+/*
+
+
+      dispatch({
+        type: "POST_DRIVER",
+        payload: response.data.answer,
+      });
+      //alert("The Driver was stored in the database");
+      alert(driver)
+    } catch (error) {
+      alert(error.request?.response);
+    }
+  };
+};
+
+*/
 
 /*
 export const filterBDAPI = (value) => {

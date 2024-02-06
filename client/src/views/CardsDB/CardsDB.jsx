@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDrivers } from "../../redux/actions";
 import { Link, useNavigate } from "react-router-dom";
-import Card from "../../components/Card/CArd";
+import Card from "../../components/Card/Card";
 const CardsDB = () => {
   const dispatch = useDispatch();
   const drivers = useSelector((state) => state.drivers);
