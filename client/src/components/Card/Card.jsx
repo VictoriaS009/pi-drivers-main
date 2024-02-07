@@ -56,4 +56,4 @@ const Card = ({driver}) => {
   )
 }
 
-export default Card
+export default Card;

@@ -12,13 +12,13 @@ const FormCreateDriver = () => {
   const [description, setDescription] = useState("This **driver** does not have a description available.");
   const [image, setImage] = useState("");
   const [date, setDate] = useState("");
-  const [selectedTeams, setSelectedTeams] = useState(["No team registration"]);
+  const [selectedTeams, setSelectedTeams] = useState([]);
   const [errorMessages, setErrorMessages] = useState({
     forename: "",
     surname: "",
     nationality: "",
     date: "",
-    image: ""
+    image: "Please enter a valid web link for the image."
   });
 
   useEffect(() => {
@@ -38,8 +38,8 @@ const FormCreateDriver = () => {
       forename: !nameRegex.test(forename) ? "Forename must begin with a capital letter and only contain characters from the English alphabet." : "",
       surname: !nameRegex.test(surname) ? "Surname must begin with a capital letter and only contain characters from the English alphabet." : "",
       nationality: !nameRegex.test(nationality) ? "Nationality must begin with a capital letter and only contain characters from the English alphabet." : "",
-      date: !dateRegex.test(date) ? "Date of Birth must be in the format YYYY-MM-DD." : "",
-      image: image && !urlRegex.test(image) ? "Please enter a valid web link for the image." : ""
+      date: !dateRegex.test(date) ? "Date of Birth must be in the format DD-MM-YYYY." : "",
+      image: !image ? "Please enter a valid web link for the image." : !urlRegex.test(image) ? "Please enter a valid web link for the image." : ""
     });
   };
 
@@ -66,7 +66,7 @@ const FormCreateDriver = () => {
       setDescription("This **driver** does not have a description available.");
       setImage("");
       setDate("");
-      setSelectedTeams(["No team registration"]);
+      setSelectedTeams([]);
     } catch (error) {
       console.error("Error al enviar el objeto al servidor:", error);
     }
@@ -156,7 +156,7 @@ const FormCreateDriver = () => {
       <form style={formStyle}>
         <div style={gridAreaStyle}>
           <p>
-            <strong>Forename, Surname, and Nationality</strong> must begin with a capital letter and cannot contain spaces, besides, <strong>description</strong> must be between 30 and 500 characters. Only characters from the English alphabet are allowed.
+            <strong>Forename, Surname, and Nationality</strong> must begin with a capital letter and cannot contain spaces. Only characters from the English alphabet are allowed.
           </p>
           <div>
             <label style={labelStyle}>Forename:</label>
@@ -203,7 +203,7 @@ const FormCreateDriver = () => {
               type="text"
               value={image}
               onChange={(e) => setImage(e.target.value)}
-              placeholder="You can add a web link from an image"
+              placeholder="Enter a web link of an image"
             />
             {errorMessages.image && <p style={errorMessageStyle}>{errorMessages.image}</p>}
           </div>
@@ -238,8 +238,8 @@ const FormCreateDriver = () => {
           </div>
         </div>
         <div style={bottomSectionStyle}>
-          {Object.values(errorMessages).some((msg) => msg !== "") && <p style={errorMessageStyle}>Please fix the errors before submitting.</p>}
-          <button type="button" onClick={handleSend} style={buttonStyle} disabled={Object.values(errorMessages).some((msg) => msg !== "")}> 
+          {Object.values(errorMessages).some((msg) => msg !== "") && <p style={errorMessageStyle}>Enter the data in the correct format.</p>}
+          <button type="button" onClick={handleSend} style={buttonStyle} disabled={Object.values(errorMessages).some((msg) => msg !== "") || !image}> 
             Send Driver
           </button>
         </div>
@@ -247,5 +247,6 @@ const FormCreateDriver = () => {
     </div>
   );
 };
+
 
 export default FormCreateDriver;

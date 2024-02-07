@@ -10,6 +10,7 @@ const Cards = () => {
   const [loading, setLoading] = useState(true);
   const [sortedDrivers, setSortedDrivers] = useState([]);
   const [sortOrder, setSortOrder] = useState(null);
+  const [initialSortDone, setInitialSortDone] = useState(false); // Nuevo estado para el orden inicial
   const navigate = useNavigate();
 
   const getDriverId = (driver) => {
@@ -21,7 +22,7 @@ const Cards = () => {
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentDrivers = sortedDrivers.slice(indexOfFirstItem, indexOfLastItem);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       await dispatch(getDrivers());
@@ -30,6 +31,15 @@ const Cards = () => {
 
     fetchData();
   }, [dispatch]);
+
+  useEffect(() => {
+    // Realizar el ordenamiento inicial solo si no se ha realizado antes
+    setSortedDrivers(drivers);
+    if (!initialSortDone && drivers.length > 0) {
+      handleSort("asc"); // Ordenar ascendente por defecto
+      setInitialSortDone(true); // Marcar que el ordenamiento inicial ha sido realizado
+    }
+  }, [drivers, initialSortDone]);
 
   const handleSort = (order) => {
     // Copia el arreglo original y ordena según el criterio
@@ -44,8 +54,8 @@ const Cards = () => {
     setSortOrder(order);
   };
 
-  // Estilos en línea
-  const cardsContainer = {
+   // Estilos en línea
+   const cardsContainer = {
     display: 'flex',
     flexWrap: 'wrap',
     flexDirection: 'column',
@@ -87,8 +97,8 @@ const Cards = () => {
               Descending
             </button>
           </div>
-          {currentDrivers.map((driver) => (
-            <Card key={getDriverId(driver)} driver={driver} />
+          {currentDrivers.map((driver, index) => (
+            <Card key={index} driver={driver} />
           ))}
           {/* Controles de paginación para navegar entre páginas de conductores */}
           <div style={paginationControlsStyle}>

@@ -2,15 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDrivers } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
-import Card from "../../components/Card/Card";
+import Card from "../Card/Card"; // Asegúrate de ajustar la importación del componente Card según la ubicación real
 
-const CardsDB = () => {
+const Cards = () => {
   const dispatch = useDispatch();
   const drivers = useSelector((state) => state.drivers);
   const [loading, setLoading] = useState(true);
   const [sortedDrivers, setSortedDrivers] = useState([]);
   const [sortOrder, setSortOrder] = useState(null);
-  const [initialSortDone, setInitialSortDone] = useState(false); // Nuevo estado para el orden inicial
   const navigate = useNavigate();
 
   const getDriverId = (driver) => {
@@ -21,9 +20,7 @@ const CardsDB = () => {
   const itemsPerPage = 9;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentDrivers = sortedDrivers
-    .filter((driver) => driver.idDB) // Solo renderiza conductores con propiedad idDB
-    .slice(indexOfFirstItem, indexOfLastItem);
+  const currentDrivers = sortedDrivers.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -34,21 +31,13 @@ const CardsDB = () => {
     fetchData();
   }, [dispatch]);
 
-  useEffect(() => {
-    // Realizar el ordenamiento inicial solo si no se ha realizado antes
-    if (!initialSortDone && drivers.length > 0) {
-      handleSort("asc"); // Ordenar ascendente por defecto
-      setInitialSortDone(true); // Marcar que el ordenamiento inicial ha sido realizado
-    }
-  }, [drivers, initialSortDone]);
-
   const handleSort = (order) => {
     // Copia el arreglo original y ordena según el criterio
     const sorted = [...drivers];
     sorted.sort((a, b) => {
-      const dateA = new Date(a.dob);
-      const dateB = new Date(b.dob);
-      return order === "asc" ? dateA - dateB : dateB - dateA;
+      const nameA = a.name.toLowerCase();
+      const nameB = b.name.toLowerCase();
+      return order === "asc" ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
     });
 
     setSortedDrivers(sorted);
@@ -90,16 +79,17 @@ const CardsDB = () => {
       ) : (
         <>
           <div>
-            <p>Do you want to sort by birthdate ascending or descending?</p>
-            <button style={paginationButtonStyle} onClick={() => handleSort("asc")}>Ascending</button>
-            <button style={paginationButtonStyle} onClick={() => handleSort("desc")}>Descending</button>
+            <p>Do you want to sort alphabetically ascending or descending?</p>
+            <button style={paginationButtonStyle} onClick={() => handleSort("asc")}>
+              Ascending
+            </button>
+            <button style={paginationButtonStyle} onClick={() => handleSort("desc")}>
+              Descending
+            </button>
           </div>
-          {currentDrivers.map((driver) => {
-            const driverId = getDriverId(driver);
-            return driverId !== null ? (
-              <Card key={driverId} driver={driver} />
-            ) : null;
-          })}
+          {currentDrivers.map((driver) => (
+            <Card key={getDriverId(driver)} driver={driver} />
+          ))}
           {/* Controles de paginación para navegar entre páginas de conductores */}
           <div style={paginationControlsStyle}>
             <button
@@ -123,7 +113,7 @@ const CardsDB = () => {
               style={paginationButtonStyle}
               className="paginationButton"
               onClick={() => setCurrentPage(currentPage + 1)}
-              disabled={indexOfLastItem >= sortedDrivers.length}
+              disabled={indexOfLastItem >= drivers.length}
             >
               &gt;
             </button>
@@ -131,9 +121,9 @@ const CardsDB = () => {
               style={paginationButtonStyle}
               className="paginationButton"
               onClick={() =>
-                setCurrentPage(Math.ceil(sortedDrivers.length / itemsPerPage))
+                setCurrentPage(Math.ceil(drivers.length / itemsPerPage))
               }
-              disabled={currentPage === Math.ceil(sortedDrivers.length / itemsPerPage)}
+              disabled={currentPage === Math.ceil(drivers.length / itemsPerPage)}
             >
               Last
             </button>
@@ -144,5 +134,4 @@ const CardsDB = () => {
   );
 };
 
-export default CardsDB;
-
+export default Cards;

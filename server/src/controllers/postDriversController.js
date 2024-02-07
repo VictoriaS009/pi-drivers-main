@@ -36,13 +36,14 @@ const postDriversController = async (forename, surname, description, image, nati
       driver.name.forename.toLowerCase().includes(forename.toLowerCase()) &&
       driver.name.surname.toLowerCase().includes(surname.toLowerCase()) &&
       driver.nationality.toLowerCase().includes(nationality.toLowerCase()) && 
-      driver.dob.toLowerCase().includes(dob.toLowerCase())
+      driver.dob.includes(dob)
     );
 
     if (existingDriverAPI) {
+      
       return `Driver ${forename} ${surname} is already in the API`;
     }
-
+   
     // Crea un nuevo objeto Driver con el idDB generado y almacénalo en la base de datos
     const newDriver = await Driver.create({
       idDB,
@@ -55,9 +56,12 @@ const postDriversController = async (forename, surname, description, image, nati
       dob: dob.split("T")[0],
     });
 
-    console.log("A new driver has been stored in the database:", newDriver.toJSON());
+    //console.log("A new driver has been stored in the database", newDriver.toJSON());
 
-    return newDriver;
+    return {
+      answer: "Driver created successfully",
+      newDriver,
+    };
   } catch (error) {
     console.error("Error:", error.message);
     throw error; // Re-lanza el error para que pueda ser manejado por el middleware de error

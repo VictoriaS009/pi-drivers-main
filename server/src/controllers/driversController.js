@@ -50,13 +50,14 @@ const driversController = async () => {
 
     if (tableDrivers.length > 0) {
       tableDrivers.forEach((e) => {
-        const { idDB, forename, surname, image, teams } = e;
+        const { idDB, forename, surname, image, teams, dob } = e;
 
         const driverDB = {
           idDB,
           name: `${forename} ${surname}`,
           image,
           teams,
+          dob,
         };
 
         driversArray.push(driverDB);
